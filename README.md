@@ -2,7 +2,7 @@
 
 # How to run the code
 
-## install the code via the folowning folder:
+## install the code via the folowning github:
 https://github.com/orrLani/Multi_Agent_System_Based_Help </br>
 
 ## Create a catkin workspace if haven't already
