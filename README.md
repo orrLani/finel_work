@@ -2,36 +2,14 @@
 
 # How to run the code
 
-## install ros melodic -
-  http://wiki.ros.org/melodic/Installation/Ubuntu
- 
-##  install TurtleBot3 Simulation
-sudo apt-get install ros-melodic-turtlebot3-*
+## install the code via the folowning folder:
+https://github.com/orrLani/Multi_Agent_System_Based_Help </br>
 
-## install MoveIt:
- sudo apt install ros-melodic-catkin python-catkin-tools
- sudo apt install ros-melodic-moveit
- 
 ## Create a catkin workspace if haven't already
 mkdir -p ~/catkin_ws/src
 cd ~/catkin_ws/ </br>
 catkin_init_workspace </br>
 ls -l </br>
-
-## Clone or download project repository into the src directory of the catkin workspace
-cd ~/catkin_ws/src </br>
-git clone  https://github.com/andreasBihlmaier/gazebo2rviz.git </br>
-git clone https://github.com/andreasBihlmaier/pysdf.git  </br>
-git clone https://github.com/JenniferBuehler/general-message-pkgs.git </br>
-git clone https://github.com/JenniferBuehler/gazebo-pkgs.git </br>
-git clone https://github.com/pal-robotics/gazebo_ros_link_attacher.git </br>
-git clone -b melodic-devel https://github.com/ROBOTIS-GIT/turtlebot3.git </br>
-git clone https://github.com/orrLani/finel_work.git </br>
-
-
-## Build the project
-cd ~/catkin_ws </br>
-catkin_make </br>
 
 ## run the folowing code in 4 terminals:
 
