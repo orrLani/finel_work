@@ -23,12 +23,12 @@ cd ~/catkin_ws/sr
 
 
 git clone  https://github.com/andreasBihlmaier/gazebo2rviz.git </br>
-git clone https://github.com/andreasBihlmaier/pysdf.git
-git clone https://github.com/JenniferBuehler/general-message-pkgs.git
-git clone https://github.com/JenniferBuehler/gazebo-pkgs.git
-git clone https://github.com/pal-robotics/gazebo_ros_link_attacher.git
-git clone -b melodic-devel https://github.com/ROBOTIS-GIT/turtlebot3.git
-git clone https://github.com/orrLani/finel_work.git
+git clone https://github.com/andreasBihlmaier/pysdf.git  </br>
+git clone https://github.com/JenniferBuehler/general-message-pkgs.git </br>
+git clone https://github.com/JenniferBuehler/gazebo-pkgs.git </br>
+git clone https://github.com/pal-robotics/gazebo_ros_link_attacher.git </br>
+git clone -b melodic-devel https://github.com/ROBOTIS-GIT/turtlebot3.git </br>
+git clone https://github.com/orrLani/finel_work.git </br>
 
 
 ## Build the project
