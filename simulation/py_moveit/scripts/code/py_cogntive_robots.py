@@ -1,6 +1,11 @@
 #!/usr/bin/env python
 ##
+import os
 import sys
+current = os.path.dirname(os.path.realpath(__file__))
+parent = os.path.dirname(current)
+sys.path.append(parent)
+sys.path.append(os.path.join(parent,'parser'))
 import copy
 import rospy
 import moveit_commander
@@ -375,8 +380,14 @@ def wapper_action(tutorial, i, tb3, pose, box):
 
 def main():
     start_time = time.time()
-    domain = sys.argv[1]
-    problem = sys.argv[2]
+    try:
+    	domain = sys.argv[1]
+    	problem = sys.argv[2]
+    except IndexError:
+	domain = os.path.join(parent,'pddl','domain_cypton_tb3.pddl')
+	problem = os.path.join(parent,'pddl','problem_cypton_tb3.pddl')
+	assert os.path.isfile(domain) and os.path.isfile(problem)
+
 
     plan = PlanToCommamndDict(domain, problem)
     tutorial = MoveGroupPythonIntefaceTutorial()
