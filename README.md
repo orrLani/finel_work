@@ -19,10 +19,10 @@ catkin_init_workspace
 ls -l
 
 ## Clone or download project repository into the src directory of the catkin workspace
-cd ~/catkin_ws/src
+cd ~/catkin_ws/sr
 
 
-git clone https://github.com/andreasBihlmaier/gazebo2rviz.git
+git clone  https://github.com/andreasBihlmaier/gazebo2rviz.git </br>
 git clone https://github.com/andreasBihlmaier/pysdf.git
 git clone https://github.com/JenniferBuehler/general-message-pkgs.git
 git clone https://github.com/JenniferBuehler/gazebo-pkgs.git
