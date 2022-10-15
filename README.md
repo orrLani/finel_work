@@ -1,33 +1,37 @@
-# finel_work
+# Finel_Work
 
 In the proposed project, heterogeneous teams of autonomous robots will be utilized to achieve a common goal. The robots we used were two kinds: a robotic arm and a turtlebot3. </br>
 We use PDDL to plan a set of steps the robots can take to get from their initial state to their goal state, in fewer actions. 
 
 
-# report
+# Report
 
 ## Installation
 
 ### Install the workspace via the installation (step 2 - Environment Setup) in this github:
+
 https://github.com/orrLani/Multi_Agent_System_Based_Help </br>
 
-### install our package in the workspace:
+### Install our package in the workspace:
+```sh
 cd ~/catkin_ws/src </br>
 git clone https://github.com/orrLani/finel_work </br>
+```
 
-
-### build the project:
+### Build the project:
+```sh
 cd ~/catkin_ws </br>
 catkin_make </br>
-
+```
 ### change permissions of py_cogntive_robots.py by set chmod +x at this file.
 
-### run in 4 terminals the folowoing code:
+### Run in 4 terminals the folowoing code:
+```sh
 1. roscore
 2. roslaunch new_moveit_config multi_gazebo_update.launch 
 3. roslaunch new_moveit_config bringup_update.launch
 4. rosrun py_moveit py_cogntive_robots.py
-
+```
 
 ## Videos for demonstration:
 
