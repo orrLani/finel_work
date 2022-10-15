@@ -90,6 +90,24 @@ def all_close(goal, actual, tolerance):
     return True
 
 
+def get_quaternion_from_euler(roll, pitch, yaw):
+    """
+    Convert an Euler angle to a quaternion.
+
+    Input
+      :param roll: The roll (rotation around x-axis) angle in radians.
+      :param pitch: The pitch (rotation around y-axis) angle in radians.
+      :param yaw: The yaw (rotation around z-axis) angle in radians.
+
+    Output
+      :return qx, qy, qz, qw: The orientation in quaternion [x,y,z,w] format
+    """
+    qx = np.sin(roll / 2) * np.cos(pitch / 2) * np.cos(yaw / 2) - np.cos(roll / 2) * np.sin(pitch / 2) * np.sin(yaw / 2)
+    qy = np.cos(roll / 2) * np.sin(pitch / 2) * np.cos(yaw / 2) + np.sin(roll / 2) * np.cos(pitch / 2) * np.sin(yaw / 2)
+    qz = np.cos(roll / 2) * np.cos(pitch / 2) * np.sin(yaw / 2) - np.sin(roll / 2) * np.sin(pitch / 2) * np.cos(yaw / 2)
+    qw = np.cos(roll / 2) * np.cos(pitch / 2) * np.cos(yaw / 2) + np.sin(roll / 2) * np.sin(pitch / 2) * np.sin(yaw / 2)
+
+    return [qx, qy, qz, qw]
 class MoveGroupPythonIntefaceTutorial(object):
     """MoveGroupPythonIntefaceTutorial"""
 
@@ -269,6 +287,7 @@ class MoveGroupPythonIntefaceTutorial(object):
             self.display_trajectory(cartesian_plan)
             self.execute_plan(cartesian_plan, open=True)
             print('box placed')
+			rospy.sleep(1)
             return True
         else:
             return False
@@ -324,7 +343,17 @@ class AskOfHelp(object):
         goal.target_pose.pose.position.y = goal_pose[1]
         # No rotation of the mobile base frame w.r.t. map frame
         # goal.target_pose.pose.orientation.w = goal_pose[3]
-        goal.target_pose.pose.orientation.w = np.arctan2(goal_pose[1], goal_pose[0])
+        # find the bast angle
+        if not goal_pose[6]:
+            if np.rad2deg(np.arctan2(goal_pose[1], goal_pose[0])) > 90:
+                goal.target_pose.pose.orientation.z = 180 - np.rad2deg(np.arctan2(goal_pose[1], goal_pose[0]))
+            elif np.rad2deg(np.arctan2(goal_pose[1], goal_pose[0])) < 0:
+                goal.target_pose.pose.orientation.z = 45 + np.rad2deg(np.arctan2(goal_pose[1], goal_pose[0]))
+            else:
+                goal.target_pose.pose.orientation.z = np.rad2deg(np.arctan2(goal_pose[1], goal_pose[0]))
+        else:
+            goal.target_pose.pose.orientation.z = np.rad2deg(np.arctan(goal_pose[1] / goal_pose[0]))
+        goal.target_pose.pose.orientation.w = np.rad2deg(np.arctan2(goal_pose[1], goal_pose[0]))
         # Sends the goal to the action server.
         self.client.send_goal(goal)
         time.sleep(0.1)
@@ -347,23 +376,32 @@ class AskOfHelp(object):
             reverse()
 
 
-def wapper_action(tutorial, i, tb3, pose, box):
+def wapper_action(tutorial, i, tb3, pose, k):
+    k = k
+    box = i['Box']
     action = i['Action']
     if action == 'move':
         print("action move")
         tb3.move_to_point(pose)
+        attach_flag = pose[6]
     elif action == 'reverse':
         print("action reverse")
         reverse()
+        if pose[6] == 0 and '3' in box:
+            attach_flag = pose[6]
+            return [attach_flag, k]
         tb3.move_to_point(pose)
+        attach_flag = pose[6]
     elif action == 'attach':
         box = i['Position']
         print("action attach")
         temp = attach(box, "link", "tb3_0", "base_footprint")
+        attach_flag = 1
     elif action == 'dettach':
         print("action detach")
         box = i['Box']
         temp = detach(box, "link", "tb3_0", "base_footprint")
+        attach_flag = 0
     elif action == 'pickup':
         print("action pickup")
         box_list = get_block_pos()
@@ -372,11 +410,16 @@ def wapper_action(tutorial, i, tb3, pose, box):
         moved = tutorial.pickup(pick)
         tutorial.go_to_joint_state()
         tutorial.close_grip()
+        attach_flag = pose[6]
     elif action in ['drop', 'firstdrop']:
         print("action place")
         print(pose)
+        pose[2] = 0.065 * k
         moved = tutorial.drop(pose)
-
+        attach_flag = pose[6]
+        k = k + 1
+        tutorial.go_to_joint_state()
+    return [attach_flag, k]
 
 def main():
     start_time = time.time()
@@ -393,33 +436,41 @@ def main():
     tutorial = MoveGroupPythonIntefaceTutorial()
     tutorial.go_to_joint_state()
     box_list = get_block_pos()
-    tower = [0.182, 0, 0]
+    tower = [-0.16, 0, 0]
     cyton_pose = [0, 0, 0]
-    pickup = [-0.03, 0.2, 0] # [0, 0.17, 0]
+    pickup = [-0.03, 0.24, 0] # [0, 0.17, 0]
+    attach_flag = 0
+    k = 0
     for i in plan:
         if i['Position'] in ['box_1', 'box_2', 'box_3']:
-            box = i['Box']
             box_to_get = box_list[i['Position']]
         elif i['Position'] in ['pickup', 'tower']:
             if i['Position'] == 'pickup':
                 box_to_get = pickup
             else:
-                box_to_get = tower
+                if i['Action'] == 'move':
+                    box_to_get = [1, 1, 0]
+                else:
+                    box_to_get = tower
+        else:
+            box_to_get = tower
+            
         try:
             x_pos = box_to_get[0]
             y_pos = box_to_get[1]
             z_pos = box_to_get[2]
             roll_deg = 0
-            pitch_deg = 90
+            pitch_deg = 45
             yaw_deg = 0
-            pose = [x_pos, y_pos, z_pos, roll_deg, pitch_deg, yaw_deg]
+            pose = [x_pos, y_pos, z_pos, roll_deg, pitch_deg, yaw_deg, attach_flag]
             a = AskOfHelp(pose, cyton_pose, pickup)
-            wapper_action(tutorial, i, a, pose, box)
+            [attach_flag, k] = wapper_action(tutorial, i, a, pose, k)
 
         except rospy.ROSInterruptException:
             return
         except KeyboardInterrupt:
             return
+	tutorial.go_to_joint_state()
 
 if __name__ == '__main__':
     main()
