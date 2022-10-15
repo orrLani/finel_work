@@ -10,7 +10,7 @@ We use PDDL to plan a set of steps the robots can take to get from their initial
 
 ### Install the workspace via the installation (step 2 - Environment Setup) in this github:
 
-https://github.com/orrLani/Multi_Agent_System_Based_Help </br>
+https://github.com/ItayGrinberg93/Multi_Agent_System_Based_Help </br>
 
 ### Install our package in the workspace:
 ```sh
