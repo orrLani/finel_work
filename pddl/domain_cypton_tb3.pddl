@@ -63,15 +63,6 @@
 		(in ?x ?h) (pickup_empty ?z))
 )
 
-
-
-;(:action firstdrop
-;:parameters (?b1 - box ?y - towerpoint ?c - crane ?h - craneholder ?x - firstbox)
-;:precondition (and (not(crane_empty ?c )) (in ?b1 ?h ) (is_first ?x) )
-;:effect (and (in ?b1 ?y ) (crane_empty ?c ) (not(in ?b1 ?h )) (not(is_first ?x) ))
-;)
-
-
 (:action drop
 :parameters (?b2 - box ?y - towerpoint ?c - crane ?h - craneholder)
 :precondition (and   (in ?b2 ?h ) (not(crane_empty ?c )) (box_clear ?y ) )
