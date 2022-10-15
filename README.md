@@ -6,25 +6,28 @@ We use PDDL to plan a set of steps the robots can take to get from their initial
 
 
 
-# How to run the code
+## Installation
 
-## Install the Workspace via the github:
+### Install the workspace via the installation in this github:
 https://github.com/orrLani/Multi_Agent_System_Based_Help </br>
 
+### install our package in the workspace:
 cd ~/catkin_ws/src
 git clone https://github.com/orrLani/finel_work
 
 
-Build the project
-cd ~/catkin_ws
-catkin_make
-```
-cd ~/catkin_ws
-source devel/setup.bash
-cd src/Multi_Agent_System_Based_Help/py_moveit/scripts/code
-chmod +x py_cogntive_robots.py
-rosrun py_moveit py_cogntive_robots.py
-```
+### build the project
+cd ~/catkin_ws </br>
+catkin_make </br>
+
+### change permissions of py_cogntive_robots.py by set chmod +x at this file.
+
+### run in 4 terminals the folowoing code:
+1. roscore
+2. roslaunch new_moveit_config multi_gazebo_update.launch 
+3. roslaunch new_moveit_config bringup_update.launch
+4. rosrun py_moveit py_cogntive_robots.py
+
 
 ## Videos for demonstration:
 
