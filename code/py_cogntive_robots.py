@@ -287,7 +287,7 @@ class MoveGroupPythonIntefaceTutorial(object):
             self.display_trajectory(cartesian_plan)
             self.execute_plan(cartesian_plan, open=True)
             print('box placed')
-			rospy.sleep(1)
+	    rospy.sleep(1)
             return True
         else:
             return False
