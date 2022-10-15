@@ -411,7 +411,7 @@ def wapper_action(tutorial, i, tb3, pose, k):
         tutorial.go_to_joint_state()
         tutorial.close_grip()
         attach_flag = pose[6]
-    elif action in ['drop', 'firstdrop']:
+    elif action in ['drop']:
         print("action place")
         print(pose)
         pose[2] = 0.065 * k
