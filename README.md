@@ -8,11 +8,16 @@ We use PDDL to plan a set of steps the robots can take to get from their initial
 
 # How to run the code
 
-## Install the simulator via the github:
+## Install the Workspace via the github:
 https://github.com/orrLani/Multi_Agent_System_Based_Help </br>
 
-## install the code
+cd ~/catkin_ws/src
+git clone https://github.com/orrLani/finel_work
 
+
+Build the project
+cd ~/catkin_ws
+catkin_make
 ```
 cd ~/catkin_ws
 source devel/setup.bash
@@ -26,3 +31,4 @@ rosrun py_moveit py_cogntive_robots.py
 https://www.youtube.com/watch?v=e8SRlvpJeT0 </br>
 
 https://www.youtube.com/watch?v=OgC8j_9-6Oo </br>
+
