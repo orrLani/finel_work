@@ -1,34 +1,38 @@
 (define (problem blocks)
 (:domain homework)
 (:objects 
-          b1  - box
-          tb - tb3
-          box_1 - boxlocation
-          tblocation - tb3location
-          sl - location
-          boxstart - location
-          tholder - tbholder
-          crane - crane
-          pickup - pickuppoint
+          ; objects
+          tb - tb3      ; turtle bot`object
+          crane - crane     ;crane object
+          b1  - box     ; box 1
+          b2 - box      ; box 2
+          b3 - box      ; box 3
           
-          ;crane holer
-          cholder - craneholder
+          
+          ; locations
+          tblocation - tb3location      ; turtle bot locations
+          start_location - location     ; start location for turtlebot
+          boxstart - location           ; ?
+          tholder - tbholder            ; trutlebot holder (grasper, location to make sure we holding 1 box)
+          pickup - pickuppoint          ;pickup location (where crane picks up box)
+          cholder - craneholder         ; crane grasper
+          tower - towerpoint            ; location to build tower on
+          
+          box_1 - boxlocation  ; box 1 location
+          box_2 - boxlocation  ; box 2 location
+          box_3 - boxlocation  ; box 3 location
+          
           
           ;drop first
-          tower - towerpoint
-          
-          ; multiple boxes
-          b2 - box
-          box_2 - boxlocation
-          b3 - box
-          box_3 - boxlocation
           
           flag - firstbox
-          )
-(:init (samelocation tblocation sl) (samelocation boxstart box_1) (is_first flag)
-(not(samelocation sl boxstart)) (in tb tblocation) 
+)
+          
+          
+(:init (samelocation tblocation start_location) (samelocation boxstart box_1) (is_first flag)
+(not(samelocation start_location boxstart)) (in tb tblocation) 
 (crane_empty crane) (in b1 box_1) (box_clear b1) (tb3_empty tb) (pickup_empty pickup)
-
+(box_clear tower)
 ; dettach
 (not(should_rev tb))
 (not(samelocation pickup box_1))

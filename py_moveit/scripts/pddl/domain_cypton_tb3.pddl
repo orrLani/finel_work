@@ -7,23 +7,24 @@
 	box crane tb3 - physobj
 	tbholder tblocations - location
 	craneholder  pickuppoint boxlocation tb3location towerpoint startlocation  - tblocations
+	box - towerpoint
 	
 	
 )
 ; box might need attached predicate
 (:predicates
-	(box_clear ?x - box)
-	(box_on ?x - box ?y - box)
-	(in ?x - physobj ?y - location)
-	(samelocation ?x - location ?y - location)
-	(tb3_empty ?x - tb3)
-	(crane_empty ?x - crane)
+	(box_clear ?x - towerpoint)                        ;is something on top of the box
+	(box_on ?x - box ?y - towerpoint)                  ;is the box on another box (x on top of y)
+	(in ?x - physobj ?y - location)             ;location of object (x in location y)
+	(samelocation ?x - location ?y - location)  ;are location equal (might be a problem)
+	(tb3_empty ?x - tb3)                        ;is trutle bot carrying a box?
+	(crane_empty ?x - crane)                    ;is the crane carrying a box?
 
     ; firstbox predicates
     
-    (is_first ?x - firstbox)
-    (pickup_empty ?x - pickuppoint)
-    (should_rev ?x - tb3)
+    (is_first ?x - firstbox)                    ;first box to be handled?
+    (pickup_empty ?x - pickuppoint)             ;does the pickup location contains a box?
+    (should_rev ?x - tb3)                       ; should the turtlebot reverse? (to not interrupt the crane)
 )
 
 (:action move
@@ -64,17 +65,18 @@
 
 
 
-(:action firstdrop
-:parameters (?b1 - box ?y - towerpoint ?c - crane ?h - craneholder ?x - firstbox)
-:precondition (and (not(crane_empty ?c )) (in ?b1 ?h ) (is_first ?x) )
-:effect (and (in ?b1 ?y ) (crane_empty ?c ) (not(in ?b1 ?h )) (not(is_first ?x) ))
-)
+;(:action firstdrop
+;:parameters (?b1 - box ?y - towerpoint ?c - crane ?h - craneholder ?x - firstbox)
+;:precondition (and (not(crane_empty ?c )) (in ?b1 ?h ) (is_first ?x) )
+;:effect (and (in ?b1 ?y ) (crane_empty ?c ) (not(in ?b1 ?h )) (not(is_first ?x) ))
+;)
 
 
 (:action drop
-:parameters (?b1 - box ?b2 - box ?y - towerpoint ?c - crane ?h - craneholder)
-:precondition (and  (in ?b1 ?y ) (in ?b2 ?h ) (not(crane_empty ?c )) (box_clear ?b1 ) )
-:effect (and (in ?b2 ?y ) (crane_empty ?c ) (not(box_clear ?b1 )) (not(in ?b2 ?h )) (box_on ?b2 ?b1))
+:parameters (?b2 - box ?y - towerpoint ?c - crane ?h - craneholder)
+:precondition (and   (in ?b2 ?h ) (not(crane_empty ?c )) (box_clear ?y ) )
+:effect (and (in ?b2 ?y ) (crane_empty ?c ) (not(box_clear ?y )) (not(in ?b2 ?h )) (box_on ?b2 ?y))
 )
+
 
 )
