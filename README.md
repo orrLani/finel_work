@@ -5,6 +5,7 @@ We use PDDL to plan a set of steps the robots can take to get from their initial
 
 
 # Report
+[Uploading קונקטיבים.pdf…]()
 
 ## Installation
 
