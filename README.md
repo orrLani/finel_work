@@ -4,16 +4,16 @@ In the proposed project, heterogeneous teams of autonomous robots will be utiliz
 We use PDDL to plan a set of steps the robots can take to get from their initial state to their goal state, in fewer actions. 
 
 
-
+# report
 
 ## Installation
 
-### Install the workspace via the installation in this github:
+### Install the workspace via the installation (step 2 - Environment Setup) in this github:
 https://github.com/orrLani/Multi_Agent_System_Based_Help </br>
 
 ### install our package in the workspace:
-cd ~/catkin_ws/src
-git clone https://github.com/orrLani/finel_work
+cd ~/catkin_ws/src </br>
+git clone https://github.com/orrLani/finel_work </br>
 
 
 ### build the project
