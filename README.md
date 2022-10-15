@@ -16,7 +16,7 @@ cd ~/catkin_ws/src </br>
 git clone https://github.com/orrLani/finel_work </br>
 
 
-### build the project
+### build the project:
 cd ~/catkin_ws </br>
 catkin_make </br>
 
