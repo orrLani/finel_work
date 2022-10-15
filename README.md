@@ -14,9 +14,7 @@ https://github.com/ItayGrinberg93/Multi_Agent_System_Based_Help </br>
 
 ### Install our files in the workspace:
 
-1. ```sh
-git clone https://github.com/orrLani/finel_work </br>
-```
+1. git clone https://github.com/orrLani/finel_work </br>
 2. remove the files in Multi_Agent_System_Based_Help/py_moveit/scripts/ </br>
 3. copy the files from the cloned git to Multi_Agent_System_Based_Help/py_moveit/scripts/
 
